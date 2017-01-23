@@ -9,12 +9,14 @@
 #import "XFATNavigationController.h"
 #import <objc/runtime.h>
 
+#define IOS8UP ([[UIDevice currentDevice].systemVersion floatValue] >= 8)
+
 @interface XFATNavigationController ()
 
 @property (nonatomic, strong) NSMutableArray<XFATPosition *> *pushPosition;
 @property (nonatomic, strong) XFATItemView *contentItem;
 @property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, strong) UIVisualEffectView *effectView;
+@property (nonatomic, strong) UIView *effectView;
 @property (nonatomic, assign) CGPoint contentPoint;
 @property (nonatomic, assign) CGFloat contentAlpha;
 @property (nonatomic, strong) NSTimer *timer;
@@ -59,7 +61,16 @@
     _contentView.layer.cornerRadius = 14;
     [self.view addSubview:_contentView];
     
-    _effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    if (IOS8UP)
+    {
+        _effectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    }
+    else
+    {
+        _effectView = [[UIView alloc] init];
+        _effectView.backgroundColor = [UIColor colorWithWhite:0.21 alpha:1];
+    }
+    
     _effectView.frame = _contentView.bounds;
     _effectView.layer.cornerRadius = [XFATLayoutAttributes cornerRadius];
     _effectView.layer.masksToBounds = YES;
