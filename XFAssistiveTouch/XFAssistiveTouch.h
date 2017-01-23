@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIWindow *assistiveWindow;
 @property (nonatomic, strong) XFATNavigationController *navigationController;
 @property (nonatomic, weak) id<XFXFAssistiveTouchDelegate> delegate;
+@property (nonatomic, strong) XFATItemView *contentItem;
 
 - (void)pushViewController:(UIViewController *)viewController atViewController:(UIViewController *)targetViewcontroller;
 - (void)pushViewController:(UIViewController *)viewController;

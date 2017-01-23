@@ -24,6 +24,8 @@
     [self.view.layer insertSublayer:layer below:0];
     
     XFAssistiveTouch *assistiveTouch = [XFAssistiveTouch sharedInstance];
+    assistiveTouch.contentItem = [XFATItemView itemWithImage:[UIImage imageNamed:@"功能区图标2x"]];
+//    assistiveTouch.navigationController.item
     assistiveTouch.delegate = self;
     [assistiveTouch showAssistiveTouch];
 }
@@ -31,22 +33,29 @@
 #pragma mark - XFXFAssistiveTouchDelegate
 
 - (NSInteger)numberOfItemsInViewController:(XFATViewController *)viewController {
-    return 8;
+    return 4;
 }
 
 - (XFATItemView *)viewController:(XFATViewController *)viewController itemViewAtPosition:(XFATPosition *)position {
     switch (position.index) {
         case 0:
-            return [XFATItemView itemWithType:XFATItemViewTypeStar];
+        {
+//            UIButton * btn = [UIButton new];
+//            [btn setImage:[UIImage imageNamed:@"公告2x"] forState:UIControlStateNormal];
+//            [btn setTitle:@"公告" forState:UIControlStateNormal];
+//            [btn sizeToFit];
+//            [btn setNeedsDisplay];
+            return [XFATItemView itemWithImage:[UIImage imageNamed:@"公告2x"] text:@"公告" font:[UIFont systemFontOfSize:16]];
+        }
             break;
         case 1:
-            return [XFATItemView itemWithType:XFATItemViewTypeStar];
+            return [XFATItemView itemWithImage:[UIImage imageNamed:@"红包2x"] text:@"公告" font:[UIFont systemFontOfSize:16]];
             break;
         case 2:
-            return [XFATItemView itemWithType:XFATItemViewTypeStar];
+            return [XFATItemView itemWithImage:[UIImage imageNamed:@"客服2x"] text:@"公告" font:[UIFont systemFontOfSize:16]];
             break;
         case 3:
-            return [XFATItemView itemWithType:XFATItemViewTypeStar];
+            return [XFATItemView itemWithImage:[UIImage imageNamed:@"推荐书2x"] text:@"公告" font:[UIFont systemFontOfSize:16]];
             break;
         case 4:
             return [XFATItemView itemWithType:XFATItemViewTypeStar];

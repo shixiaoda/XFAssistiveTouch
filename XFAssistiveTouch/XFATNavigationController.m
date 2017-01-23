@@ -8,6 +8,7 @@
 
 #import "XFATNavigationController.h"
 #import <objc/runtime.h>
+#import "XFAssistiveTouch.h"
 
 #define IOS8UP ([[UIDevice currentDevice].systemVersion floatValue] >= 8)
 
@@ -76,7 +77,16 @@
     _effectView.layer.masksToBounds = YES;
     [_contentView addSubview:_effectView];
     
-    _contentItem = [XFATItemView itemWithType:XFATItemViewTypeSystem];
+    if ([XFAssistiveTouch sharedInstance].contentItem)
+    {
+        _contentItem = [XFAssistiveTouch sharedInstance].contentItem;
+        _effectView.alpha = 0;
+    }
+    else
+    {
+        _contentItem = [XFATItemView itemWithType:XFATItemViewTypeSystem];
+    }
+    
     _contentItem.center = _contentPoint;
     [self.view addSubview:_contentItem];
     
@@ -148,6 +158,11 @@
         _contentView.alpha = 1;
         _contentItem.center = [XFATPosition positionWithCount:count index:count - 1].center;
         _contentItem.alpha = 0;
+        if ([XFAssistiveTouch sharedInstance].contentItem)
+        {
+            _effectView.alpha = 1;
+        }
+        
     }];
 }
 
@@ -168,12 +183,18 @@
         _viewControllers.lastObject.backItem.alpha = 0;
     }];
     
-    [UIView animateWithDuration:[XFATLayoutAttributes animationDuration] animations:^{
-        _contentView.frame = CGRectMake(0, 0, [XFATLayoutAttributes itemImageWidth], [XFATLayoutAttributes itemImageWidth]);
-        _contentView.center = _contentPoint;
+    [UIView animateWithDuration:[XFATLayoutAttributes animationDuration] delay:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
+        CGRect frame = CGRectMake(_contentPoint.x - [XFATLayoutAttributes itemImageWidth],
+                                  _contentPoint.y - [XFATLayoutAttributes itemImageWidth],
+                                  [XFATLayoutAttributes itemImageWidth], [XFATLayoutAttributes itemImageWidth]);
+        _contentView.frame = frame;
         _effectView.frame = _contentView.bounds;
         _contentItem.alpha = 1;
         _contentItem.center = _contentPoint;
+        if ([XFAssistiveTouch sharedInstance].contentItem)
+        {
+            _effectView.alpha = 0;
+        }
     } completion:^(BOOL finished) {
         for (XFATViewController *viewController in _viewControllers) {
             [viewController.items makeObjectsPerformSelector:@selector(removeFromSuperview)];
