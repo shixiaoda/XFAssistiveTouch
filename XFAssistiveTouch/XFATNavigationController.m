@@ -22,7 +22,7 @@
 @property (nonatomic, assign) CGFloat contentAlpha;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) BOOL show;
-
+@property (nonatomic, assign) BOOL customContentItem;
 @end
 
 @implementation XFATNavigationController
@@ -77,10 +77,19 @@
     _effectView.layer.masksToBounds = YES;
     [_contentView addSubview:_effectView];
     
-    if ([XFAssistiveTouch sharedInstance].contentItem)
+    if ([self.delegate isKindOfClass:[XFAssistiveTouch class]])
     {
-        _contentItem = [XFAssistiveTouch sharedInstance].contentItem;
-        _effectView.alpha = 0;
+        XFAssistiveTouch *touch = self.delegate;
+        if (touch.contentItem)
+        {
+            _contentItem = touch.contentItem;
+            _effectView.alpha = 0;
+            self.customContentItem = YES;
+        }
+        else
+        {
+             _contentItem = [XFATItemView itemWithType:XFATItemViewTypeSystem];
+        }
     }
     else
     {
@@ -158,11 +167,10 @@
         _contentView.alpha = 1;
         _contentItem.center = [XFATPosition positionWithCount:count index:count - 1].center;
         _contentItem.alpha = 0;
-        if ([XFAssistiveTouch sharedInstance].contentItem)
+        if (self.customContentItem)
         {
             _effectView.alpha = 1;
         }
-        
     }];
 }
 
@@ -191,7 +199,7 @@
         _effectView.frame = _contentView.bounds;
         _contentItem.alpha = 1;
         _contentItem.center = _contentPoint;
-        if ([XFAssistiveTouch sharedInstance].contentItem)
+        if (self.customContentItem)
         {
             _effectView.alpha = 0;
         }
