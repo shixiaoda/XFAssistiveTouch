@@ -27,7 +27,7 @@
     CGPoint point = CGPointMake(CGRectGetWidth(screenFrame)
                                 - [self itemImageWidth] / 2
                                 - [self margin],
-                                CGRectGetMidY(screenFrame));
+                                CGRectGetMaxY(screenFrame) - 80 - [self itemImageWidth] / 2);
     return point;
 }
 
@@ -44,7 +44,7 @@
 }
 
 + (CGFloat)margin {
-    return 2;
+    return 10;
 }
 
 + (NSUInteger)maxCount {
