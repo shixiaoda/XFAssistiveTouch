@@ -122,7 +122,7 @@
     CGRect endKeyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
 
     //根据实时位置计算于键盘的间距
-    CGFloat yOffset = endKeyboardRect.origin.y - CGRectGetMaxY(_assistiveWindow.frame);
+    CGFloat yOffset = endKeyboardRect.origin.y - CGRectGetMaxY(_assistiveWindow.frame) - self.endKeyboardOffsetY;
 
     //如果键盘弹起给_coverWindowPoint赋值
     if (endKeyboardRect.origin.y < CGRectGetHeight([UIScreen mainScreen].bounds)) {

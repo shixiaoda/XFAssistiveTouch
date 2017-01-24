@@ -26,6 +26,7 @@
     XFAssistiveTouch *assistiveTouch = [XFAssistiveTouch sharedInstance];
     assistiveTouch.contentItem = [XFATItemView itemWithImage:[UIImage imageNamed:@"功能区图标2x"]];
 //    assistiveTouch.navigationController.item
+    assistiveTouch.endKeyboardOffsetY = 80;
     assistiveTouch.delegate = self;
     [assistiveTouch showAssistiveTouch];
 }
