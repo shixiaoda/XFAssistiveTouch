@@ -16,6 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (XFATItemView *)viewController:(XFATViewController *)viewController itemViewAtPosition:(XFATPosition *)position;
 - (void)viewController:(XFATViewController *)viewController didSelectedAtPosition:(XFATPosition *)position;
 
+@optional
+- (void)navigationController:(XFATNavigationController *)navigationController actionBeginAtPoint:(CGPoint)point;
+- (void)navigationController:(XFATNavigationController *)navigationController actionEndAtPoint:(CGPoint)point;
+
 @end
 
 @interface XFAssistiveTouch : NSObject

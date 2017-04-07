@@ -95,6 +95,10 @@
     _assistiveWindow.frame = [UIScreen mainScreen].bounds;
     _navigationController.view.frame = [UIScreen mainScreen].bounds;
     [_navigationController moveContentViewToPoint:_assistiveWindowPoint];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(navigationController:actionBeginAtPoint:)]) {
+        [_delegate navigationController:navigationController actionBeginAtPoint:point];
+    }
 }
 
 - (void)navigationController:(XFATNavigationController *)navigationController actionEndAtPoint:(CGPoint)point {
@@ -103,6 +107,10 @@
     _assistiveWindow.center = _assistiveWindowPoint;
     CGPoint contentPoint = CGPointMake([XFATLayoutAttributes itemImageWidth] / 2, [XFATLayoutAttributes itemImageWidth] / 2);
     [_navigationController moveContentViewToPoint:contentPoint];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(navigationController:actionEndAtPoint:)]) {
+        [_delegate navigationController:navigationController actionEndAtPoint:point];
+    }
 }
 
 #pragma mark - UIKeyboardWillChangeFrameNotification
