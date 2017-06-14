@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 - (void)navigationController:(XFATNavigationController *)navigationController actionBeginAtPoint:(CGPoint)point;
 - (void)navigationController:(XFATNavigationController *)navigationController actionEndAtPoint:(CGPoint)point;
-
+- (void)navigationController:(XFATNavigationController *)navigationController actionDidAtPoint:(CGPoint)point;
 @end
 
 @interface XFAssistiveTouch : NSObject
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)pushViewController:(UIViewController *)viewController atViewController:(UIViewController *)targetViewcontroller;
 - (void)pushViewController:(UIViewController *)viewController;
-
+- (void)setAssistiveWindowPoint:(XFAssistiveTouch *)XFAssistiveTouch;
 @end
 
 NS_ASSUME_NONNULL_END

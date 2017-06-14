@@ -150,28 +150,42 @@
     [self invokeActionBeginDelegate];
     [self setShow:YES];
     NSUInteger count = _viewControllers.firstObject.items.count;
-    for (int i = 0; i < count; i++) {
-        XFATItemView *item = _viewControllers.firstObject.items[i];
-        item.alpha = 0;
-        item.center = _contentPoint;
-        [self.view addSubview:item];
-        [UIView animateWithDuration:[XFATLayoutAttributes animationDuration] animations:^{
-            item.center = [XFATPosition positionWithCount:count index:i].center;
-            item.alpha = 1;
-        }];
-    }
     
-    [UIView animateWithDuration:[XFATLayoutAttributes animationDuration] animations:^{
-        _contentView.frame = [XFATLayoutAttributes contentViewSpreadFrame];
-        _effectView.frame = _contentView.bounds;
-        _contentView.alpha = 1;
-        _contentItem.center = [XFATPosition positionWithCount:count index:count - 1].center;
-        _contentItem.alpha = 0;
-        if (self.customContentItem)
-        {
-            _effectView.alpha = 1;
+    if (count > 0)
+    {
+        for (int i = 0; i < count; i++) {
+            XFATItemView *item = _viewControllers.firstObject.items[i];
+            item.alpha = 0;
+            item.center = _contentPoint;
+            [self.view addSubview:item];
+            [UIView animateWithDuration:[XFATLayoutAttributes animationDuration] animations:^{
+                item.center = [XFATPosition positionWithCount:count index:i].center;
+                item.alpha = 1;
+            }];
         }
-    }];
+        
+        
+        [UIView animateWithDuration:[XFATLayoutAttributes animationDuration] animations:^{
+            _contentView.frame = [XFATLayoutAttributes contentViewSpreadFrame];
+            _effectView.frame = _contentView.bounds;
+            _contentView.alpha = 1;
+            _contentItem.center = [XFATPosition positionWithCount:count index:count - 1].center;
+            _contentItem.alpha = 0;
+            if (self.customContentItem)
+            {
+                _effectView.alpha = 1;
+            }
+        }];
+
+    }
+    else
+    {
+         if (_delegate && [_delegate respondsToSelector:@selector(navigationController:actionDidAtPoint:)]) {
+             [_delegate navigationController:self actionDidAtPoint:self.contentPoint];
+         }
+        
+         [self shrink];
+    }
 }
 
 - (void)shrink {

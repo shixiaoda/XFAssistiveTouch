@@ -64,6 +64,11 @@
     }
 }
 
+- (void)setAssistiveWindowPoint:(XFAssistiveTouch *)XFAssistiveTouch
+{
+    _assistiveWindow.frame = XFAssistiveTouch.assistiveWindow.frame;
+    _assistiveWindowPoint = XFAssistiveTouch.assistiveWindowPoint;
+}
 #pragma mark - XFATRootViewControllerDelegate
 
 - (NSInteger)numberOfItemsInViewController:(XFATViewController *)viewController {
@@ -110,6 +115,12 @@
     
     if (_delegate && [_delegate respondsToSelector:@selector(navigationController:actionEndAtPoint:)]) {
         [_delegate navigationController:navigationController actionEndAtPoint:point];
+    }
+}
+
+- (void)navigationController:(XFATNavigationController *)navigationController actionDidAtPoint:(CGPoint)point {
+    if (_delegate && [_delegate respondsToSelector:@selector(navigationController:actionDidAtPoint:)]) {
+        [_delegate navigationController:navigationController actionDidAtPoint:point];
     }
 }
 
